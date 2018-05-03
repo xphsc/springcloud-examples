@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:root}
+    url: jdbc:mysql://${MYSQL_HOST:192.168.119.208}:${MYSQL_PORT:3306}/vap_users?useUnicode=true&useSSL=false&characterEncoding=UTF-8
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+    loginUsername: vap
+    loginPassword: vap
+    jpa:
+        generate-ddl: false
+        show-sql: true
+        hibernate:
+          ddl-auto: update
+  session:
+    store-type: redis
+  redis:
+    host: ${REDIS_HOST:192.168.118.81}
+    port: ${REDIS_PORT:6379}
+    maxidle:  2
+    maxTotal: 10
+    maxWaitMillis : 60000
+
+springfox:
+  name: 北信源武汉分公司
+  title: 用户登录、用户管理、权限管理等模块
+  description: admin相关接口文档

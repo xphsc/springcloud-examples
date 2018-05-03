@@ -1,0 +1,16 @@
+server:
+  port: 8701
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST:xphsc}:${EUREKA_PORT:8761}/eureka/, http://${EUREKA_HOST:xphsc1}:${EUREKA_PORT:8762}/eureka/
+  instance:
+    preferIpAddress: false
+    statusPageUrlPath: /info
+    healthCheckUrlPath: /health
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+
+

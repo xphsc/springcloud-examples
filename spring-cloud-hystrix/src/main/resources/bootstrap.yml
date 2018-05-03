@@ -1,0 +1,9 @@
+spring:
+ profiles:
+   active: dev
+info:
+  app:
+    name: "server-hystrix"
+    description: "负载熔断监控服务"
+    version: "1.0-SNAPSHOT"
+    spring-boot-version: "1.0-SNAPSHOT"

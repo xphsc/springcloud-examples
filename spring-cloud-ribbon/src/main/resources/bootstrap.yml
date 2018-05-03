@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: ribbon-client
+  profiles:
+     active: dev
