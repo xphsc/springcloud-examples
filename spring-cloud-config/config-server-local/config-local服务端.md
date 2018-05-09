@@ -3,14 +3,20 @@
 
 
 
-### config Server
+### 如何引入config local server
 
 ```
+ <dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-config-server</artifactId>
+</dependency>
  <dependency>
         <groupId>org.springframework.cloud</groupId>
         <artifactId>spring-cloud-starter-eureka-server</artifactId>
     </dependency>
 ```
+
+
 ### 如何运行一个config Server
 
 ```
