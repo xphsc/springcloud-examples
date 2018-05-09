@@ -1,2 +1,2 @@
 config:
-  client: config-client
+  client: 这是配置中心客户端
