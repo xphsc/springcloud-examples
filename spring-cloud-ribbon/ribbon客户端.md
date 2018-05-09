@@ -1,8 +1,12 @@
 ## ribbon-client
 ## 概述
 
-Ribbon是一个客户端负载均衡器，它可以让您对HTTP和TCP客户端的行为有很大的控制权。 Feign已经使用Ribbon，所以如果您使用的是@FeignClient，那么这个部分也适用。
-Ribbon中一个重要的概念是named client。Spring Cloud使用RibbonClientConfiguration根据需要为每个named client创建一个新的集合作为ApplicationContext，这包含（除其他外）ILoadBalancer，RestClient和ServerListFilter。
+Ribbon是一个客户端负载均衡器，
+    它可以让您对HTTP和TCP客户端的行为有很大的控制权。
+    Feign已经使用Ribbon，所以如果您使用的是@FeignClient，
+    那么这个部分也适用。
+    Ribbon中一个重要的概念是named client。
+    Spring Cloud使用RibbonClientConfiguration根据需要为每个named client创建一个新的集合作为ApplicationContext，这包含（除其他外）ILoadBalancer，RestClient和ServerListFilter。
 
 
 ### 如何引入ribbon
@@ -21,14 +25,14 @@ Ribbon中一个重要的概念是named client。Spring Cloud使用RibbonClientCo
 Spring Cloud还允许你通过使用`@RibbonClient`声明其他配置（在`RibbonClientConfiguration`上）来完全控制客户端。例：
 
 ```
-@Configuration
-@RibbonClient(name = "foo", configuration = FooConfiguration.class)
+@RibbonClient(name = "user-server", configuration = RibbonConfig.class)
 public class TestConfiguration {
 }
-```
-在这种情况下，ribbon client由已经在`RibbonClientConfiguration`中的组件和`FooConfiguration`中的任何组件（后者通常会覆盖前者）组成。(备注：使用`RibbonClientConfiguration`中的Bean和自定义的`FooConfiguration`中的Bean来配置ribbon client, `FooConfiguration`中的Bean会覆盖`RibbonClientConfiguration`中的Bean)
 
-**注意：** 上面的`FooConfiguration`必须用`@Configuration`，但是注意它不能在应用上下文被`@ComponentScan`扫描到，否则它将被所有`@RibbonClient`所共享。如果你使用`@ComponentScan`或者`@SpringBootApplication`,你需要避免它被包括在内(例如：把它放在一个单独的，不重叠的包或者在`@ComponentScan`中明确指定要扫描的包)。(备注：我是在`src/main/java`下新建一个package,将自定义的RibbonConfiguration配置Bean放在这个包下)
+```
+在这种情况下，ribbon client由已经在`RibbonClientConfiguration`中的组件和`RibbonConfig`中的任何组件（后者通常会覆盖前者）组成。(备注：使用`RibbonClientConfiguration`中的Bean和自定义的`RibbonConfig`中的Bean来配置ribbon client, `RibbonConfig`中的Bean会覆盖`RibbonClientConfiguration`中的Bean)
+
+**注意：** 上面的`RibbonConfig`必须用`@Configuration`，但是注意它不能在应用上下文被`@ComponentScan`扫描到，否则它将被所有`@RibbonClient`所共享。如果你使用`@ComponentScan`或者`@SpringBootApplication`,你需要避免它被包括在内(例如：把它放在一个单独的，不重叠的包或者在`@ComponentScan`中明确指定要扫描的包)。(备注：我是在`src/main/java`下新建一个package,将自定义的RibbonConfiguration配置Bean放在这个包下)
 
 ### Spring Cloud Netflix默认给ribbon提供以下的bean(`BeanType` beanName: `ClassName`):
 * `IClientConfig` ribbonClientConfig: `DefaultClientConfigImpl`
@@ -39,13 +43,14 @@ public class TestConfiguration {
 * `ILoadBalancer` ribbonLoadBalancer: `ZoneAwareLoadBalancer`
 * `ServerListUpdater` ribbonServerListUpdater: `PollingServerListUpdater`
 
-创建这些类型的bean并将其放置在`@RibbonClient`配置Bean（例如上面的`FooConfiguration`）中，可以覆盖所描述的每个bean。例：
+创建这些类型的bean并将其放置在`@RibbonClient`配置Bean（例如上面的`RibbonConfig`）中，可以覆盖所描述的每个bean。例：
 
 ```
 @Configuration
-public class FooConfiguration {
+public class RibbonConfig {
+
     @Bean
-    public IPing ribbonPing(IClientConfig config) {
+    public IPing ribbonPing(){
         return new PingUrl();
     }
 }
@@ -67,10 +72,10 @@ Spring Cloud Netflix现在支持使用properties来定制Ribbon client，以便�
 
 **提示：** 在这些属性中定义的类优先于使用`@RibbonClient(configuration=MyRibbonConfig.class)`定义的bean和Spring Cloud Netflix提供的默认类。
 
-要为一个名为`users`的服务设置`IRule`，可以如下设置：
+要为一个名为`user-server`的服务设置`IRule`，可以如下设置：
 
 ```
-users:
+user-server:
   ribbon:
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
 ```
@@ -85,9 +90,9 @@ Eureka是一个远程服务发现的一个简便实现，所以你不需要在cl
 **application.yml**
 
 ```
-stores:
+user-server:
   ribbon:
-    listOfServers: example.com,google.com
+    listOfServers: xphsc:8002
 ```
 ##  在Ribbon中禁用Eureka
 设置属性`ribbon.eureka.enabled = false`将明确禁止在Ribbon中使用Eureka。
@@ -103,16 +108,23 @@ ribbon:
 你可以直接使用`LoadBalancerClient`，例如：
 
 ```
-public class MyClass {
+@RestController
+public class UserLoadBalancerController {
     @Autowired
     private LoadBalancerClient loadBalancer;
 
-    public void doStuff() {
-        ServiceInstance instance = loadBalancer.choose("stores");
-        URI storesUri = URI.create(String.format("http://%s:%s", instance.getHost(), instance.getPort()));
-        // ... do something with the URI
+    @GetMapping("/getloadBalancer")
+    public Object getloadBalancer() {
+        ServiceInstance instance = loadBalancer.choose("user-server");
+              URI userUri = URI.create(String.format("http://%s:%s", instance.getHost(), instance.getPort()));
+              // 打印当前选择的是哪点节点
+              System.out.println("打印当前选择的是哪点节点:{}"+userUri);
+              // ... do something with the URI
+              return userUri;
     }
+
 }
+
 ```
 ##  Ribbon的缓存配置
 每个named client的Ribbon都有一个Spring Cloud维护的对应子应用程序上下文,这个应用程序的上下文是当对named client第一次请求时懒加载的。可以将此延迟加载行为更改为在启动时立即加载这些子应用程序上下文，通过指定Ribbon client的名称来配置。
