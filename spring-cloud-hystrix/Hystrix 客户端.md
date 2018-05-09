@@ -90,7 +90,7 @@
  eureka:
    instance:
      metadata-map:
-       management.port: ${management.port:8081}
+       management.port: ${management.port:8761}
  ```
  配置`turbine.appConfig`是Turbine用于查找实例的Eureka中注册的serviceId的列表。Turbine stream然后在Hystrix仪表板中使用一个类似如下的url：`http://my.turbine.sever:8080/turbine.stream?cluster=<CLUSTERNAME>`(cluster参数可以被省略，如果名称是“default”)。`cluster`参数必须与`turbine.aggregator.clusterConfig`中的条目匹配。从Eureka返回的值是大写，因此，如果有一个名为“customers”的应用程序在Eureka注册，我们预计这个例子将起作用：
 
@@ -106,16 +106,16 @@
  turbine:
    aggregator:
      clusterConfig: SYSTEM,USER
-   appConfig: customers,stores,ui,admin
+   appConfig: hystrix-client,user-server
    clusterNameExpression: metadata['cluster']
  ```
- 在这种情况下，来自4个服务的集群名称将从其metadata映射中提取出来，预期包含“SYSTEM”和“USER”的值。
+ 在这种情况下，来自2个服务的集群名称将从其metadata映射中提取出来，预期包含“SYSTEM”和“USER”的值。
 
  要为所有应用程序使用“default”集群，你需要一个字符串文字表达式(使用单引号，如果使用YAML，则使用双引号进行转义):
 
  ```
  turbine:
-   appConfig: customers,stores
+   appConfig: hystrix-client
    clusterNameExpression: "'default'"
  ```
  Spring Cloud提供了一个`spring-cloud-starter-netflix-turbine`，它拥有运行Turbine服务器所需的所有依赖。只需创建一个Spring Boot应用程序并使用`@EnableTurbine`对其进行注释。
