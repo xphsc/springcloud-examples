@@ -1,5 +1,0 @@
-spring:
-  application:
-    name: eurekaservicer
-  profiles:
-     active: dev

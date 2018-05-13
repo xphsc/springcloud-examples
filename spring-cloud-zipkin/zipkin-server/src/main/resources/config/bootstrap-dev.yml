@@ -1,0 +1,29 @@
+server:
+  port: 8766
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST:xphsc}:${EUREKA_PORT:8761}/eureka/
+  instance:
+    preferIpAddress: false
+    healthCheckUrlPath: /health
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+
+datasource:
+    url: jdbc:mysql://${MYSQL_HOST:xphsc}:${MYSQL_PORT:3306}/zipkin?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    initialize: true
+   #zipkin数据保存到数据库中需要进行如下配置
+   #表示当前程序不使用sleuth
+  sleuth:
+    enabled: false
+   #表示zipkin数据存储方式是mysql
+zipkin:
+  storage:
+    type: mysql
+

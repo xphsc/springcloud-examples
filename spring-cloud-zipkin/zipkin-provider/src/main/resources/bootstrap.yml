@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: zipkin-provider
+  profiles:
+    active: dev

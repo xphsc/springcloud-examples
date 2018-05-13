@@ -1,7 +1,14 @@
 ## feign-client
 ## 概述
 
-Feign是一个声明式的web服务client。它让编写web服务客户端更简单。使用Feign需要创建一个接口并在上面加注解。它有可插拔的注解支持，包括Feign的注解和JAX-RS的注解。Feign也支持可插拔式的编码器(encoder)和解码器(decoder)。Spring Cloud增加了对Spring MVC注解的支持，并且使用了Spring Web中默认使用的`HttpMessageConverters`。Spring Cloud整合Ribbon和Eureka，在使用Feign时提供负载均衡的http client。
+Feign是一个声明式的web服务client。
+    它让编写web服务客户端更简单。
+    使用Feign需要创建一个接口并在上面加注解。
+    它有可插拔的注解支持，包括Feign的注解和JAX-RS的注解。
+    Feign也支持可插拔式的编码器(encoder)和解码器(decoder)。
+    Spring Cloud增加了对Spring MVC注解的支持，
+    并且使用了Spring Web中默认使用的`HttpMessageConverters`。
+    Spring Cloud整合Ribbon和Eureka，在使用Feign时提供负载均衡的http client。
 
 
 

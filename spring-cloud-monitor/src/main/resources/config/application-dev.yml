@@ -1,0 +1,47 @@
+server:
+  port: 8769
+http:
+ eureka:
+  serviceUrl: xphsc
+
+eureka:
+  instance:
+     preferIpAddress: true
+     metadataMap:
+       instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+  client:
+    healthcheck:
+      enabled: true
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${http.eureka.serviceUrl}:8000/eureka/
+
+spring:
+  boot:
+    admin:
+      url: http://xphsc:${server.port}
+  jackson:
+    serialization:
+      indent_output: true
+  cloud:
+    config:
+      enabled: false
+
+
+
+management:
+  security:
+    enabled: false
+endpoints:
+  health:
+    sensitive: false
+  trace:
+    enabled: true
+    sensitive: false
+info:
+  app:
+    name: "server-monitor"
+    description: "用于监控各个模块的运行情况"
+    version: "1.5.9-SNAPSHOT"
+    spring-boot-version: "1.5.9-SNAPSHOT"

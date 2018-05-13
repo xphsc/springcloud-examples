@@ -1,0 +1,37 @@
+server:
+  port: 10010
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST:xphsc}:${EUREKA_PORT:8761}/eureka/
+  instance:
+    preferIpAddress: true
+    statusPageUrlPath: /info
+    healthCheckUrlPath: /health
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+
+
+
+
+zuul:
+ routes:
+   user:
+      path: /user-server/**
+      serviceId: user
+      sensitiveHeaders: "*"
+   intelligentsia-authority:
+        sensitiveHeaders : Authorization
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+ribbon:
+  eureka:
+    enabled: true

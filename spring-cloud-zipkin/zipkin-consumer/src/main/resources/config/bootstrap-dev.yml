@@ -1,0 +1,25 @@
+server:
+  port: 8900
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST:xphsc}:${EUREKA_PORT:8761}/eureka/
+  instance:
+    preferIpAddress: false
+    healthCheckUrlPath: /health
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+
+spring :
+  sleuth:
+      sampler:
+        percentage: 1.0
+    rabbitmq:
+      host: localhost
+      port: 5672
+      username: guest
+      password: guest
+
+
