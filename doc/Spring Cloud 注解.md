@@ -278,6 +278,12 @@ public class AlanOAuthApplication {
 - @RunWith(Suite.class)的话就是一套测试集合，
 - @WebAppConfiguration("src/main/resources") : 注解在类上,用来声明加载的ApplicationContex 是一个WebApplicationContext ,它的属性指定的是Web资源的位置,默认为 - src/main/webapp ,自定义修改为 resource
 - @Before : 在 xxx 前初始化
+# Spring 4.3新注解：
+- @GetMapping 相当于Get请求（@RequestMapping(method=RequestMethod.GET)）
+- @PostMapping 相当于POST请求 （@RequestMapping(method=RequestMethod.POST)）
+- @PutMapping 相当于PUT请求 （@RequestMapping(method=RequestMethod.PUT)）
+- @DeleteMapping 相当于DELETE请求 （@RequestMapping(method=RequestMethod.DELETE)）
+- @PatchMapping 相当于PATCH请求 （@RequestMapping(method=RequestMethod.PATCH)）
 
 # Spring Boot 注解:
 
@@ -288,7 +294,7 @@ public class AlanOAuthApplication {
 - @ConfigurationProperties(prefix = "author",locations = {"classpath:config/author.properties"})
 - 通过@ConfigurationProperties加载配置,通过prefix属性指定配置前缀,通过location指定配置文件位置
 - @EnableAutoConfiguration 注解:作用在于让 Spring Boot   根据应用所声明的依赖来对 Spring 框架进行自动配置
--         这个注解告诉Spring Boot根据添加的jar依赖猜测你想如何配置Spring。由于spring-boot-starter-web添加了Tomcat和Spring MVC，所以auto-- configuration将假定你正在开发一个web应用并相应地对Spring进行设置。
+-  这个注解告诉Spring Boot根据添加的jar依赖猜测你想如何配置Spring。由于spring-boot-starter-web添加了Tomcat和Spring MVC，所以auto-- configuration将假定你正在开发一个web应用并相应地对Spring进行设置。
 - @ Configuration @EnableAutoConfiguration (exclude={xxxx.class}) 禁用特定的自动配置
 - @SpringBootApplication   注解等价于以默认属性使用 @Configuration，@EnableAutoConfiguration和     @ComponentScan。
 

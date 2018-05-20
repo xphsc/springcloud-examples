@@ -1,0 +1,26 @@
+server:
+  port: 8888
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST:xphsc}:${EUREKA_PORT:8761}/eureka/
+  instance:
+    hostname: config-server
+    preferIpAddress: true
+    statusPageUrlPath: /info
+    healthCheckUrlPath: /health
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+
+spring:
+ profiles:
+     active: native
+ cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/configRepo
+encrypt:
+  key: Thisismysecretkey
