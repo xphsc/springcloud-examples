@@ -16,6 +16,7 @@
         <module>config-server-git</module>
         <module>config-server-local</module>
         <module>config-server-svn</module>
+        <module>config-encrypt</module>
     </modules>
 <dependencies>
     <dependency>
