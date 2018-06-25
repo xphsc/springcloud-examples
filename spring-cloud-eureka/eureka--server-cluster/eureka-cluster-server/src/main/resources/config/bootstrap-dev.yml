@@ -1,6 +1,18 @@
+#server:
+#  port: 8761
+#eureka:
+#  instance:
+#    hostname: xphsc
+#  client:
+#    registerWithEureka: false
+#    fetchRegistry: false
+#    serviceUrl:
+#      defaultZone: http://xphsc1:8762/eureka/
+---
 server:
   port: 8761
-
+spring:
+  profiles: xphsc
 eureka:
   instance:
     hostname: xphsc
@@ -9,4 +21,16 @@ eureka:
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://xphsc1:8762/eureka/
-
+---
+server:
+  port: 8762
+spring:
+  profiles: xphsc1
+eureka:
+  instance:
+    hostname: xphsc1
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://xphsc:8761/eureka/
