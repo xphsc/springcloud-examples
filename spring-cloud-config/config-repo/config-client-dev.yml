@@ -1,2 +1,4 @@
 config:
   client: 这是配置中心客户端
+    id: 1
+    
