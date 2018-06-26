@@ -1,0 +1,36 @@
+server:
+  port: 8889
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST:xphsc}:${EUREKA_PORT:8761}/eureka/
+  instance:
+    preferIpAddress: false
+    healthCheckUrlPath: /health
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+
+spring:
+  cloud:
+    config:
+      profile: dev
+      discovery:
+        enabled: true
+        serviceId: config-server
+  rabbitmq:
+    host: 106.15.159.105
+    port: 5672
+    username: admin
+    password: admin
+#   cloud:
+#      config:
+#        uri: http://xphsc:8888
+#        profile: dev
+endpoints:
+ metrics:
+  sensitive: false
+management:
+ security:
+   enabled: false

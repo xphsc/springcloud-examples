@@ -1,0 +1,30 @@
+server:
+  port: 8888
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://${EUREKA_HOST:xphsc}:${EUREKA_PORT:8761}/eureka/
+  instance:
+    hostname: config-server
+    preferIpAddress: true
+    statusPageUrlPath: /info
+    healthCheckUrlPath: /health
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 2
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/xphsc/springcloud-examples/
+          search-paths: spring-cloud-config/config-repo
+#          basedir: config-repo
+#          username:
+#          password:
+  rabbitmq:
+    host: 106.15.159.105
+    port: 5672
+    username: admin
+    password: admin
