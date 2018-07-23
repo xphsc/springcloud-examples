@@ -14,13 +14,14 @@ eureka:
     lease-expiration-duration-in-seconds: 2
 
 
-
-
 zuul:
+ host:
+    connect-timeout-millis: 30000
+    socket-timeout-millis: 30000
  routes:
    user:
-      path: /user-server/**
-      serviceId: user
+      path: /user/**
+      serviceId: user-server
       sensitiveHeaders: "*"
    intelligentsia-authority:
         sensitiveHeaders : Authorization
